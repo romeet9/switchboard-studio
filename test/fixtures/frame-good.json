@@ -1,0 +1,24 @@
+{
+  "name": "Working file",
+  "nodes": {
+    "2:1": {
+      "document": {
+        "id": "2:1", "name": "Brief-x / Variant A", "type": "FRAME",
+        "layoutMode": "VERTICAL", "itemSpacing": 16, "paddingLeft": 24, "paddingTop": 24, "cornerRadius": 8,
+        "boundVariables": {
+          "itemSpacing": { "type": "VARIABLE_ALIAS", "id": "v1" }, "paddingLeft": { "type": "VARIABLE_ALIAS", "id": "v2" },
+          "paddingTop": { "type": "VARIABLE_ALIAS", "id": "v3" }, "cornerRadius": { "type": "VARIABLE_ALIAS", "id": "v4" }
+        },
+        "fills": [{ "type": "SOLID", "color": { "r": 1, "g": 1, "b": 1, "a": 1 }, "boundVariables": { "color": { "type": "VARIABLE_ALIAS", "id": "v5" } } }],
+        "children": [
+          { "id": "2:2", "name": "Heading", "type": "TEXT", "style": { "fontSize": 32, "fontWeight": 700 }, "styles": { "text": "S:h1" },
+            "fills": [{ "type": "SOLID", "color": { "r": 0, "g": 0, "b": 0, "a": 1 }, "boundVariables": { "color": { "type": "VARIABLE_ALIAS", "id": "v6" } } }] },
+          { "id": "2:3", "name": "Primary action", "type": "INSTANCE", "componentId": "c:btn",
+            "absoluteBoundingBox": { "x": 0, "y": 0, "width": 120, "height": 36 }, "children": [] }
+        ]
+      },
+      "components": { "c:btn": { "key": "k-btn", "name": "Button", "remote": true } },
+      "styles": { "S:h1": { "key": "s2", "name": "heading/h1", "styleType": "TEXT" } }
+    }
+  }
+}

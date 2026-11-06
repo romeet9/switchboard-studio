@@ -1,0 +1,19 @@
+{
+  "name": "Working file",
+  "document": { "id": "0:0", "type": "DOCUMENT", "children": [
+    { "id": "0:1", "name": "Scratch", "type": "CANVAS", "children": [
+      { "id": "9:1", "name": "Doodle", "type": "FRAME" } ] },
+    { "id": "0:2", "name": "Brief-prd-1-demo", "type": "CANVAS", "children": [
+      { "id": "10:1", "name": "Brief-prd-1-demo / Variant A", "type": "FRAME", "children": [
+        { "id": "10:2", "name": "Variant A / State a - Full queue", "type": "FRAME" },
+        { "id": "10:3", "name": "Variant A / State b - Empty", "type": "FRAME" } ] },
+      { "id": "11:1", "name": "Brief-prd-1-demo / Variant B", "type": "FRAME", "children": [
+        { "id": "11:2", "name": "Variant B / State a - Full queue", "type": "FRAME" } ] },
+      { "id": "12:1", "name": "Notes", "type": "TEXT" },
+      { "id": "13:1", "name": "Brief-prd-1-demo / Variant B v2", "type": "FRAME", "children": [
+        { "id": "13:2", "name": "Variant B / State a - Full queue", "type": "FRAME" } ] } ] },
+    { "id": "0:3", "name": "Other", "type": "CANVAS", "children": [
+      { "id": "20:1", "name": "Brief-old / Variant A", "type": "FRAME", "children": [
+        { "id": "20:2", "name": "Variant A / State a - Old", "type": "FRAME" } ] } ] }
+  ] }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "switchboard-studio",
+  "version": "0.1.0",
+  "description": "Brief → three on-system Figma variants → critique → you decide, in a Switch room.",
+  "type": "module",
+  "bin": { "studio": "bin/studio.js" },
+  "engines": { "node": ">=20" },
+  "scripts": { "test": "node --test test/*.test.js" },
+  "repository": { "type": "git", "url": "git+https://github.com/romeet9/switchboard-studio.git" },
+  "homepage": "https://github.com/romeet9/switchboard-studio#readme",
+  "bugs": { "url": "https://github.com/romeet9/switchboard-studio/issues" },
+  "author": "Romeet Chatterjee",
+  "keywords": ["switch", "figma", "design-system", "ai-agents", "slack", "claude-code", "design-lint"],
+  "license": "MIT"
+}

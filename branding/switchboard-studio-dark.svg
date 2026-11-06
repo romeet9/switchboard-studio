@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450" height="100" viewBox="0 0 450 100" role="img" aria-label="Switchboard Studio">
+  <title>Switchboard Studio</title>
+  <g fill="none" stroke="#818CF8" stroke-width="3" stroke-linecap="round">
+    <path d="M32 50H42M70 50H80"/>
+  </g>
+  <rect x="6" y="38" width="26" height="24" rx="7" fill="#818CF8"/>
+  <rect x="42" y="38" width="28" height="24" rx="7" fill="#F3F4F6"/>
+  <rect x="80" y="38" width="26" height="24" rx="7" fill="#818CF8"/>
+  <text x="124" y="60" font-family="Inter, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="30" font-weight="600" letter-spacing="-0.5" fill="#F3F4F6">Switchboard Studio</text>
+</svg>

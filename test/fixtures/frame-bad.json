@@ -1,0 +1,39 @@
+{
+  "name": "Working file",
+  "nodes": {
+    "1:1": {
+      "document": {
+        "id": "1:1", "name": "Brief-x / Variant B", "type": "FRAME",
+        "layoutMode": "VERTICAL", "itemSpacing": 16, "paddingLeft": 24, "cornerRadius": 8,
+        "boundVariables": { "paddingLeft": { "type": "VARIABLE_ALIAS", "id": "VariableID:1:1" } },
+        "absoluteBoundingBox": { "x": 0, "y": 0, "width": 400, "height": 600 },
+        "fills": [{ "type": "SOLID", "color": { "r": 1, "g": 1, "b": 1, "a": 1 }, "boundVariables": { "color": { "type": "VARIABLE_ALIAS", "id": "VariableID:2:1" } } }],
+        "children": [
+          { "id": "1:2", "name": "Low contrast", "type": "TEXT", "characters": "Hard to read",
+            "style": { "fontFamily": "Inter", "fontSize": 14, "fontWeight": 400 },
+            "fills": [{ "type": "SOLID", "color": { "r": 0.611765, "g": 0.639216, "b": 0.686275, "a": 1 } }] },
+          { "id": "1:3", "name": "Good text", "type": "TEXT", "characters": "Readable",
+            "style": { "fontFamily": "Inter", "fontSize": 14, "fontWeight": 400 },
+            "styles": { "text": "S:body" },
+            "fills": [{ "type": "SOLID", "color": { "r": 0.066667, "g": 0.094118, "b": 0.152941, "a": 1 }, "boundVariables": { "color": { "type": "VARIABLE_ALIAS", "id": "VariableID:3:1" } } }] },
+          { "id": "1:4", "name": "Red box", "type": "RECTANGLE",
+            "fills": [{ "type": "SOLID", "color": { "r": 1, "g": 0, "b": 0, "a": 1 } }] },
+          { "id": "1:5", "name": "Hidden box", "type": "RECTANGLE", "visible": false,
+            "fills": [{ "type": "SOLID", "color": { "r": 0, "g": 1, "b": 0, "a": 1 } }] },
+          { "id": "1:6", "name": "Checkbox", "type": "INSTANCE", "componentId": "c:lib",
+            "absoluteBoundingBox": { "x": 0, "y": 0, "width": 14, "height": 15 },
+            "children": [
+              { "id": "I1:6;9:1", "name": "Box", "type": "RECTANGLE", "fills": [{ "type": "SOLID", "color": { "r": 0, "g": 0, "b": 1, "a": 1 } }] }
+            ] },
+          { "id": "1:7", "name": "Banner", "type": "INSTANCE", "componentId": "c:local",
+            "absoluteBoundingBox": { "x": 0, "y": 0, "width": 300, "height": 48 }, "children": [] }
+        ]
+      },
+      "components": {
+        "c:lib": { "key": "k-lib", "name": "Checkbox", "remote": true },
+        "c:local": { "key": "k-local", "name": "Banner", "remote": false }
+      },
+      "styles": { "S:body": { "key": "s1", "name": "body/md", "styleType": "TEXT" } }
+    }
+  }
+}

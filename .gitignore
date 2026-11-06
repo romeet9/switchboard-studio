@@ -1,0 +1,31 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Env and secrets (never commit tokens, Figma PATs, Switch API keys)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local agent state
+.claude/
+.switch/
+node_modules/
+
+# Demo artefacts that are large or private
+*.mov
+*.mp4
+!docs/demo-placeholder.mp4
+screenshots/private/
+node_modules/
+.figma-token
+out/
+
+.figma-token
+**/.figma-token
+out/**
+out/*.png
