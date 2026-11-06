@@ -109,9 +109,10 @@ export async function run(argv) {
   // (e) link
   if (!(await waitForAgents(team, yes))) return o.flags.has('link-only') || yes ? 1 : 0;
   const results = linkAgents(AGENTS_DIR, { team });
+  if (!results.some((r) => r.role === 'keeper')) console.log(`\nNote: ${team}-keeper folder not found yet; skipped (re-run \`studio init --link-only\` once it exists).`);
   console.log('\nLinking:');
   printLinks(results);
-  for (const role of ['brief', 'critic']) {
+  for (const role of ['brief', 'critic', 'keeper']) {
     if (results.find((r) => r.role === role) && !existsSync(join(REPO, 'agents', role, 'CLAUDE.md'))) console.log(`\nNote: agents/${role}/CLAUDE.md does not exist yet; the link will resolve once it does.`);
   }
   console.log('\nDone. Run `studio doctor` to confirm.');

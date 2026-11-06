@@ -74,8 +74,15 @@ sequenceDiagram
 | `<team>-brief`          | Product lead   | A sharp senior colleague. Short, clarifying, scope-tight | Reads the PRD, asks at most four gap questions (each with a default), posts a seven-field brief and hands off to the designer. Never opens Figma. |
 | `<team>-designer`       | Product designer | Warm and specific, one message per variant             | Builds three structurally different variants of one screen from your library, posts a PNG per state, iterates to `v2`, `v3`. Reports library gaps. |
 | `<team>-critic`         | Design reviewer | Direct, kind, opinionated, numbers first               | Runs `studio lint`, scores fit, accessibility and design-system adherence out of 5, recommends one variant, then hands the decision to you.      |
+| `<team>-keeper`         | Decision log   | Calm and exact, a good note-taker                       | Logs every step per brief (answers, variants, lint numbers, recommendation, your choice, `vN` iterations, sign-off) and keeps the decision record in the room document. |
 
 You are the `pm` and `approver` roles in the room. Nothing is final until you say so in words.
+
+## 📒 Decision log
+
+`<team>-keeper` writes down how each design got decided, so nobody has to scroll the thread. For every brief it records the brief, your answers to the gap questions, the variants, the lint numbers, the critic's recommendation, your choice, each `vN` iteration and the final sign-off. Events live in an append-only `decisions.jsonl` in the keeper's folder (override with `--file` or `STUDIO_LOG_FILE`).
+
+The keeper keeps a decision record per brief in the room document: a status line, the decision (who chose what, in their words), a timeline table and links. Ask `@weft-keeper why <slug>` for the trail in chat, or run `studio log export <slug> --md` for the Markdown.
 
 ## ⏱️ Setup at a glance
 
@@ -261,7 +268,7 @@ You should get "All 11 checks pass." If not, a short table shows what to fix. Th
 
 ## 💬 Using it from Slack
 
-Agents are named `<team>-brief`, `<team>-designer`, `<team>-critic`. Examples use team `weft`. Always @mention the agent. Unmentioned messages are ignored.
+Agents are named `<team>-brief`, `<team>-designer`, `<team>-critic`, `<team>-keeper`. Examples use team `weft`. Always @mention the agent. Unmentioned messages are ignored.
 
 | Message                                         | Who answers      | What you get                                                  |
 | ----------------------------------------------- | ---------------- | ------------------------------------------------------------- |
@@ -273,6 +280,10 @@ Agents are named `<team>-brief`, `<team>-designer`, `<team>-critic`. Examples us
 | `@weft-designer export B [v2] [state a]`        | designer         | PNGs of that variant or state posted in the thread            |
 | `@weft-critic lint [B\|B v2\|figma link]`       | critic           | Measured design-system report                                 |
 | `@weft-critic details` or `full`                | critic           | The rest of the last abbreviated reply, in the same thread    |
+| `@weft-keeper log`                              | keeper           | Logs the latest step of the thread in the decision log        |
+| `@weft-keeper history <slug>`                   | keeper           | Every logged event for that brief, newest context first       |
+| `@weft-keeper why <slug>`                       | keeper           | The trail that led to the latest chosen version               |
+| `@weft-keeper catch up`                         | keeper           | One row per brief: status, chosen variant, versions, last update |
 | `!reset`                                        | any agent        | Clears that agent's session and starts fresh                  |
 
 ### Your first run
@@ -336,6 +347,7 @@ Plain Node 20+, zero dependencies. You run it once for setup. After that the age
 | `studio list [url\|key]` | Lists `Brief-*` pages, variant wrappers and state frames with Figma links. | `--json`, `--compact`, `--table`                                                            |
 | `studio lint [url\|key]` | Measures design-system adherence of frames. Defaults to the working file.   | `--node <id>` (repeatable), `--json`, `--max-issues N` (default 10), `--compact`, `--full`, `--table` |
 | `studio export [url\|key]` | Exports frames as PNGs and prints their paths.                           | `--node <id>` (repeatable), `--frame "<name prefix>"` (repeatable), `--page "<page prefix>"`, `--out <dir>` (default `./out`), `--scale <0.01–4>` (default 2) |
+| `studio log <add\|show\|why\|briefs\|export>` | The design decision log kept by the keeper (`decisions.jsonl`). | `--brief`, `--event`, `--by`, `--variant`, `--version`, `--summary`, `--link`, `--data`, `--file`, `--table`, `--json`, `--md` |
 
 Example:
 
@@ -378,7 +390,7 @@ The agents' rules are library-agnostic except for the name "Loom". To switch:
 | Path                                          | What's inside                                                         |
 | --------------------------------------------- | --------------------------------------------------------------------- |
 | `bin/studio.js`                               | The `studio` CLI entry point and command dispatcher                   |
-| `src/commands/`                               | `doctor`, `init`, `list`, `lint`, `export`                            |
+| `src/commands/`                               | `doctor`, `init`, `list`, `lint`, `export`, `log`                          |
 | `src/lib/`                                    | Lint rules, Figma REST client, config, agent linking, table output    |
 | `test/`                                       | `node --test` suites and Figma JSON fixtures                          |
 | `templates/switchboard-studio.template.yaml`  | The Switch template: 3 agents, room, roles, docs, aliases, kickoff    |

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // studio CLI dispatcher. Each command lives in src/commands/<name>.js and
 // exports `async function run(args)` plus a one-line `summary` string.
-const COMMANDS = ['doctor', 'init', 'lint', 'export', 'list'];
+const COMMANDS = ['doctor', 'init', 'lint', 'export', 'list', 'log'];
 const [cmd, ...args] = process.argv.slice(2);
 const isHelp = !cmd || cmd === '-h' || cmd === '--help' || cmd === 'help';
 

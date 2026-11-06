@@ -1,6 +1,6 @@
 # Slack message style for the Switchboard Studio room
 
-Single reference for how `weft-brief` (a product lead), `weft-designer` (a product designer) and `weft-critic` (a design reviewer) post in Slack. They should read like human teammates, and all data goes in tables. Each agent's CLAUDE.md repeats these rules and its own examples under `## Voice and format`, because agents may not open other files.
+Single reference for how `weft-brief` (a product lead), `weft-designer` (a product designer), `weft-critic` (a design reviewer) and `weft-keeper` (the design ops lead who logs decisions) post in Slack. They should read like human teammates, and all data goes in tables. Each agent's CLAUDE.md repeats these rules and its own examples under `## Voice and format`, because agents may not open other files.
 
 ## Rules
 
@@ -175,3 +175,40 @@ If everything passes: "All 11 checks pass." and no table.
 > B v2 · [Figma](url)
 >
 > @weft-critic delta review when you've got a minute. Romeet, reply `@weft-designer B v2 + change` to keep going.
+
+### Keeper examples
+
+**Milestone ping** (appended by brief, designer or critic to a message they already send, one line, no separate message):
+
+> @weft-keeper noting: brief prd-301 is set, card redesign, 2 states.
+>
+> @weft-keeper noting: Romeet picked B, "go with B, bigger CTA".
+
+**Keeper's reply** (one short line, or a ✓ reaction):
+
+> Logged. Decision log updated.
+
+**log / decisions** (one row per brief):
+
+> Two briefs on the books, one chosen.
+>
+> ```
+> Brief                  Status    Chosen  Versions  Last update
+> prd-214-bulk-approve   chosen    B       v1, v2    today 14:20
+> prd-301-card           variants  --      v1        today 11:05
+> ```
+>
+> Reply `@weft-keeper log prd-301-card` for the trail.
+
+**why:**
+
+> B v2 won on the one-step approve and the bar padding fix.
+>
+> ```
+> When   Event           Variant  By        Summary
+> 11:09  recommendation  B        critic    B clears the queue in one go
+> 11:14  choice          B        Romeet    "go with B, bigger CTA"
+> 11:31  iteration       B        designer  v2: CTA bigger, 60s undo
+> ```
+>
+> Reply `@weft-keeper log prd-301` for the full history.

@@ -9,7 +9,7 @@ const studio = (...a) => spawnSync(process.execPath, [bin, ...a], { encoding: 'u
 test('--help exits 0 and lists commands', () => {
   const r = studio('--help');
   assert.equal(r.status, 0);
-  for (const c of ['doctor', 'init', 'lint', 'export', 'list']) assert.match(r.stdout, new RegExp(c));
+  for (const c of ['doctor', 'init', 'lint', 'export', 'list', 'log']) assert.match(r.stdout, new RegExp(c));
 });
 
 test('no args prints help and exits 0', () => {

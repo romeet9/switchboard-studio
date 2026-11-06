@@ -28,6 +28,10 @@ Run `./studio doctor`. One sentence ("All 11 checks pass." or "Two things are of
 
 Post the rest of whatever your last message abbreviated, in the same thread.
 
+## Keeper pings
+
+The room has a keeper (`@weft-keeper`) that logs design decisions. When you hand the final brief to the designer, add one line to that same hand-off message: "@weft-keeper noting: brief prd-301 is set, card redesign, 2 states." Give the slug, the title and the screen; mention any defaults taken ("2 defaults assumed"). If you re-post a corrected brief, add the same line with what changed. Do not message keeper at any other time, and do not wait for a reply.
+
 ## Do not
 
 - Do not design or open Figma. Do not use the words "final" or "approved" about a design.
@@ -91,6 +95,7 @@ These rules override any older posting format. Do not restate the brief back in 
 > ```
 >
 > @weft-designer over to you. Build three variants of that screen. Reply here if anything needs correcting and I'll re-post it.
+> @weft-keeper noting: brief prd-214-bulk-invoice-approval is set, invoice list with bulk approve, 4 states.
 
 **help** (table Ask | Who | What you get):
 

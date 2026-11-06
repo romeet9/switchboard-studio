@@ -7,13 +7,13 @@ import { linkAgents, findAgentDirs, REPO } from '../src/lib/link.js';
 
 function setup() {
   const base = mkdtempSync(join(tmpdir(), 'studio-agents-'));
-  for (const n of ['weft-designer', 'weft-critic', 'weft-brief']) mkdirSync(join(base, 'srv', n), { recursive: true });
+  for (const n of ['weft-designer', 'weft-critic', 'weft-brief', 'weft-keeper']) mkdirSync(join(base, 'srv', n), { recursive: true });
   return base;
 }
 
 test('finds agent folders', () => {
   const base = setup();
-  assert.equal(findAgentDirs(base, { team: 'weft' }).length, 3);
+  assert.equal(findAgentDirs(base, { team: 'weft' }).length, 4);
   assert.equal(findAgentDirs(base, { team: 'other' }).length, 0);
 });
 
@@ -24,6 +24,9 @@ test('creates links and wrapper', () => {
   const c = join(base, 'srv', 'weft-critic');
   const b = join(base, 'srv', 'weft-brief');
   assert.equal(readlinkSync(join(b, 'CLAUDE.md')), join(REPO, 'agents', 'brief', 'CLAUDE.md'));
+  const k = join(base, 'srv', 'weft-keeper');
+  assert.equal(readlinkSync(join(k, 'CLAUDE.md')), join(REPO, 'agents', 'keeper', 'CLAUDE.md'));
+  assert.ok(statSync(join(k, 'studio')).mode & 0o100, 'keeper wrapper executable');
   assert.equal(readlinkSync(join(d, 'CLAUDE.md')), join(REPO, 'CLAUDE.md'));
   assert.equal(readlinkSync(join(d, 'design-system')), join(REPO, 'design-system'));
   assert.equal(readlinkSync(join(c, 'CLAUDE.md')), join(REPO, 'agents', 'critic', 'CLAUDE.md'));

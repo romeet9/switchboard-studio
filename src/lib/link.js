@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 export const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const AGENTS_DIR = join(homedir(), '.switch', 'agents');
-export const ROLES = ['designer', 'critic', 'brief'];
+export const ROLES = ['designer', 'critic', 'brief', 'keeper'];
 
 /** Find `<team>-<role>` folders under <base>/*\/. Returns [{ server, role, team, dir }]. */
 export function findAgentDirs(base = AGENTS_DIR, { team, roles = ROLES } = {}) {
@@ -18,7 +18,7 @@ export function findAgentDirs(base = AGENTS_DIR, { team, roles = ROLES } = {}) {
     let names;
     try { names = readdirSync(sdir); } catch { continue; }
     for (const name of names) {
-      const m = name.match(/^(.+)-(designer|critic|brief)$/);
+      const m = name.match(/^(.+)-(designer|critic|brief|keeper)$/);
       if (!m || !roles.includes(m[2]) || (team && m[1] !== team)) continue;
       out.push({ server, team: m[1], role: m[2], dir: join(sdir, name) });
     }
@@ -31,6 +31,7 @@ export function linkPlan(role, repo = REPO) {
   const plan = [];
   if (role === 'designer') plan.push({ name: 'CLAUDE.md', target: join(repo, 'CLAUDE.md'), kind: 'symlink' });
   if (role === 'brief') plan.push({ name: 'CLAUDE.md', target: join(repo, 'agents', 'brief', 'CLAUDE.md'), kind: 'symlink' });
+  if (role === 'keeper') plan.push({ name: 'CLAUDE.md', target: join(repo, 'agents', 'keeper', 'CLAUDE.md'), kind: 'symlink' });
   if (role === 'critic') plan.push({ name: 'CLAUDE.md', target: join(repo, 'agents', 'critic', 'CLAUDE.md'), kind: 'symlink' });
   if (role === 'designer' || role === 'critic') plan.push({ name: 'design-system', target: join(repo, 'design-system'), kind: 'symlink' });
   plan.push({ name: 'studio', kind: 'wrapper' });

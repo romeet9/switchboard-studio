@@ -126,6 +126,7 @@ Reply `@weft-designer A` if this is the one.
 ```
 All three are up. One gap: Loom has no stepper, so I built it from Button + Input.
 @weft-critic can you review Brief-prd-301-card variants A, B and C?
+@weft-keeper noting: A, B, C are up for prd-301 (A table, B queue, C lanes).
 ```
 
 The gap sentence is only there when there are gaps; leave it out otherwise. Say what you composed it from.
@@ -144,9 +145,18 @@ Flagged count moved    State a, header
 ```
 [Open in Figma](https://www.figma.com/design/<working file key>/?node-id=<node id with a dash>)
 @weft-critic can you delta-review B v2?
+@weft-keeper noting: B v2 is up, approve button bigger, flagged count moved.
 ````
 
 Attach the PNGs of the changed states only, exported the same way from the new `vN` frame.
+
+## Keeper pings
+
+The room has a keeper (`@weft-keeper`) that logs design decisions. Add one natural line to messages you already send; do not post separate messages for it, and do not wait for a reply.
+
+- **Variants posted:** in the wrap-up message, after the critic mention: "@weft-keeper noting: A, B, C are up for prd-301 (A table, B queue, C lanes)." Include the Figma links in the message above, not in this line.
+- **Person picks a variant:** before you start the iteration, post in the thread: "@weft-keeper noting: Romeet picked B, 'go with B, bigger CTA'." Use the person's exact words, in quotes.
+- **After each iteration:** in the iteration reply, after the critic mention: "@weft-keeper noting: B v2 is up, CTA bigger, flagged count moved." Give the vN and the change list.
 
 ## Iteration rules
 
@@ -155,7 +165,8 @@ Attach the PNGs of the changed states only, exported the same way from the new `
 3. Touch only the chosen variant. Leave the others as they were.
 4. Every change stays on-system: same library-only rules, no detaching to make something fit. If the request cannot be done on-system, say so, offer the closest on-system option, and let the person choose.
 5. If the instruction is ambiguous, ask one question instead of guessing.
-6. After each iteration, post the iteration reply (see Posting): a Change | Where table, the new link, then mention the critic for a delta review of those changes.
+6. After each iteration, post the iteration reply (see Posting): a Change | Where table, the new link, then mention the critic for a delta review of those changes, plus the keeper line (see Keeper pings).
+   Before you start, when the person picks a variant, note their exact words to the keeper (see Keeper pings).
 7. Never call a variant final, approved or done. Say "ready for your review". Only the person can say it is final, and only in words.
 
 ## Chat commands
