@@ -1,12 +1,10 @@
-# I put a design team of three agents in a chat room: a first-timer's guide to Switch
+# I put a design team of four agents in a Slack room: a first-timer's guide to Switch
 
-*Draft for the Flip the Switch Best Blog side track. Screenshots are placeholders.*
+I'm a product designer. When a PRD lands, what I want is not a pretty mockup. I want genuinely different options, side by side, with someone honest pointing out what's wrong with each, before I spend a day pushing pixels.
 
-I'm a product designer. When a PRD lands, what I want is not a pretty mockup. I want three genuinely different options, side by side, with someone honest pointing out what's wrong with each, before I spend a day pushing pixels.
+That conversation already happens in team chat. So for the Flip the Switch hackathon I built **Switchboard Studio**: you post a brief in a chat room, and four AI agents (a brief agent, a designer, a critic and a keeper) turn it into Figma variants, a measured critique, a recommendation and a logged decision. You make the decision. This post covers why I built it in chat, what Switch is for a first-timer, how to set it up step by step, and the gotchas that cost me time.
 
-That conversation already happens in team chat. So for the Flip the Switch hackathon I built **Switchboard Studio**: you post a brief in a chat room, and three AI agents (a brief agent, a designer and a critic) turn it into three Figma variants, a critique and a recommendation. You make the decision. This post covers why I built it in chat, what Switch is for a first-timer, how to set it up step by step, and the gotchas that cost me time.
-
-![TODO: hero shot of the Slack thread with the three variant messages and the critic scorecard](screenshots/hero.png)
+![Variant A posted in the Slack thread, with a State / What it shows table and one screenshot per state](screenshots/variant-a.png)
 
 ## Why design ideation belongs in team chat
 
@@ -33,19 +31,13 @@ You need Docker Desktop running and Claude Code signed in (run `claude` once in 
 
 Open Switch Console. On the "Setting up Switch" checklist click **Get started**, then **Add a server**. Choose **On this computer** and click **Start**. Console starts the Switch server, Postgres, a gateway and a local Mattermost in Docker, makes an admin account and signs you in. Wait for "Local server is running", then **Continue**.
 
-![TODO: Console showing "Local server is running"](screenshots/local-server.png)
-
 ### 2. Pick Claude Code as the provider
 
 At "How'd you like to power switch-buddy?" choose **Claude Code**. The line under it must say "Signed in". You can re-check any time in Settings, Agent providers. If it says "CLI not installed", quit Console with Cmd+Q (closing the window doesn't quit it) and reopen so it re-reads your PATH.
 
-![TODO: Agent providers screen with Claude Code "Signed in"](screenshots/provider.png)
-
 ### 3. Link your account
 
 This is the step everyone misses. By default agents answer only their owner, and Switch has to know which chat account is you. Go to Server Home, then **Messaging apps**, find the Mattermost row, and click **Link**, then **This is me**. If you skip it, agents silently ignore you.
-
-![TODO: Messaging apps row with the Link, "This is me" dialog](screenshots/link-account.png)
 
 ### 4. Enable "Can manage agents" (optional)
 
@@ -54,8 +46,6 @@ Only needed if you want an agent to create agents or rooms for you. Open the age
 ### 5. Import the template
 
 In the sidebar open **Templates**, click **Import template** and paste the YAML (or load the saved file). Open it and click **Use**.
-
-![TODO: Templates page with the imported Switchboard Studio template](screenshots/template-import.png)
 
 ### 6. Fill in the params
 
@@ -79,9 +69,9 @@ params:
     input: advanced
 ```
 
-Enter a team name (for example `studio`), paste the file key of a blank Figma file that has your design system library enabled, and click **Create agent and room**. You get `studio-brief`, `studio-designer`, `studio-critic` and a room, with a kickoff message in it.
+Enter a team name (for example `studio`), paste the file key of a blank Figma file that has your design system library enabled, and click **Create agent and room**. You get `studio-brief`, `studio-designer`, `studio-critic`, `studio-keeper` and a room, with a kickoff message in it.
 
-![TODO: the generated params form filled in](screenshots/params-form.png)
+![Switch Console showing the four Switchboard agents running on this computer](screenshots/console-agents.png)
 
 ### 7. Symlink the designer's rules
 
@@ -103,9 +93,9 @@ Once the one-time setup is done, I never open a terminal. The agents run a small
 - `@weft-critic lint B` posts the measured design-system report.
 - `@weft-brief <brief>` starts a new brief, and `!reset` starts fresh.
 
-## Designing three agents (and why the human approves)
+## Designing four agents (and why the human approves)
 
-Each agent is a block of instructions in the template. The brief agent never designs; the designer never judges its own work; the critic never edits Figma. Clear roles keep each prompt short and each failure traceable.
+Each agent is a block of instructions in the template. The brief agent never designs; the designer never judges its own work; the critic never edits Figma; the keeper only writes things down. Clear roles keep each prompt short and each failure traceable.
 
 ```yaml
 agents:
@@ -116,9 +106,17 @@ agents:
     directory: "{directory}"
 ```
 
-The brief agent asks at most four numbered questions, each with a proposed default, so I can answer "yes" or "1 yes, 2 no". On my run it asked about flagged invoices (held back from bulk approve), a 30 second undo, bulk reject (none) and the states to show.
+The brief agent asks at most four numbered questions, each with a proposed default, so I can answer `go` or override one, like `2 30s`. On my run it asked how flagged invoices behave in bulk, how long the undo window is, whether to show who raised each invoice, and how many variants to build.
 
-The designer builds three variants that must differ in structure, not colour: **A Familiar** (a table with checkboxes), **B Focused** (one action clears the 36 clean invoices, flagged ones inline with reasons) and **C Ambitious** (triage lanes: Ready, Needs a look, Approved today). It uses only the published design system and posts one message per variant, with one PNG per state.
+![The brief agent's four questions, each with a default](screenshots/brief-questions.png)
+
+After I replied `go`, it posted the finished brief as a Field / Value table, marking every assumption so I could see what was its call and what was mine, and handed it to the designer.
+
+![The structured design brief, with assumptions marked](screenshots/brief-final.png)
+
+The designer builds variants that must differ in structure, not colour. By default that's three: **A Familiar**, **B Focused** and **C Ambitious**. For this run I asked for two to keep it fast: **A**, a 12-row table with a bulk bar that totals each currency, and **B**, a summary card with one big "Approve 57 invoices" button over a pre-selected queue, with flagged invoices on their own tab. It uses only the published design system and posts one message per variant, with one PNG per state.
+
+![The designer's kickoff: it confirms the hand-off and lists the two directions](screenshots/handoff.png)
 
 The room also defines roles, and this is the part I care about most:
 
@@ -132,32 +130,43 @@ The room also defines roles, and this is the part I care about most:
 
 The agents never say "final" or "approved" about a design. A designer's job is judgment, and I did not want to outsource it. I wanted to compress the boring part.
 
-![TODO: the three variant messages in Slack, A, B and C](screenshots/variants.png)
+Here's what it actually built in Figma, straight from the exports it posted to the thread:
+
+![Variant A, state a: 57 selected, 6 flagged skipped](screenshots/design-A-state-a.png)
+
+![Variant A, state b: 6 flagged left, with the undo pop-up](screenshots/design-A-state-b.png)
+
+![Variant B, state a: summary card and one big approve button](screenshots/design-B-state-a.png)
+
+![Variant B, state b: the flagged tab, with the undo pop-up](screenshots/design-B-state-b.png)
 
 ## What the critic caught
 
-The critic posts a scorecard (brief fit, accessibility and design system adherence, each out of 5). It was more useful than I expected, because it measures instead of opining:
+The critic posts a scorecard (brief fit, accessibility and design-system adherence, each out of 5). It was more useful than I expected, because it measures instead of opining. It runs `studio lint` against the Figma file and quotes the numbers: A was 97% bound to variables, B 100%, both 100% on text styles and library components, with zero contrast failures.
 
-- Contrast ratios, computed for the text and status colours.
-- A **14 x 15 px checkbox target**, far under a comfortable click or tap size.
-- A **Toast that auto-dismisses before the 30 second undo window ends**, so the undo safety net disappeared exactly when it was needed.
-- **Single-key "A approve" shortcuts**, a risky one-keystroke action for something that moves money.
+It also checked its own tool. Lint flagged two unbound corner radii on A, so the critic opened the frame in Figma, found they were bound after all, and called them false positives in the thread. Then it listed what to fix first:
 
-It recommended Variant B, with one condition: "open the 36 as a compact table so nobody approves blind". Then it asked me to decide. I replied in the thread:
+- **Loom's Table is fixed at 6 rows**, so A had to build its own from Table Header Row and Table Row. That's a real gap in the design system, not a designer mistake.
+- **B's big button sits over a 6-row page**, so you'd approve 57 invoices while seeing 6. That's exactly the "approve blind" the brief warned against.
+- **Row checkboxes are 14 to 16 px**, under the 24 px desktop target.
+
+![The critic's scorecard: a Variant / Fit / A11y / Loom / Risk table and a Fix first table](screenshots/critic-scorecard.png)
+
+It recommended A, then handed the decision back to me with the exact reply to send. Choosing is one line in the thread:
 
 ```
-@weft-designer B + open the list as a table
+@weft-designer A + make the whole checkbox cell clickable
 ```
 
-The designer made **Variant B v2** (it never overwrites the original), posted only the changed states, and pinged the critic for a delta review.
+The designer then makes **A v2** next to the original (it never overwrites), posts only the changed states, and pings the critic for a delta review.
 
-![TODO: the critic scorecard message](screenshots/critic-scorecard.png)
+## The keeper remembers why
 
-![TODO: Variant B v2 with the delta review reply](screenshots/b-v2-delta.png)
+Decisions get lost faster than designs. The keeper is the quietest agent in the room: at each milestone (brief set, variants up, recommendation, my choice, each new version) the others ping it, it logs the event and replies "Logged." A month later, `@weft-keeper why prd-214` returns the whole trail: what the critic recommended, what I chose in my own words, and which version came out of it. It also saves that trail as a "Decision log" room document, so it outlives the thread.
 
 ## Gotchas I learned the hard way
 
-1. **The Directory param is one value for all agents.** If you set a plain folder, all three agents share it. Keep the default `{$agents_dir}/{agent}` so each gets its own.
+1. **The Directory param is one value for all agents.** If you set a plain folder, all four agents share it. Keep the default `{$agents_dir}/{agent}` so each gets its own.
 2. **Mention agents or they ignore you.** Unmentioned messages are skipped. The template's kickoff and handoffs all `@mention`, and so should you.
 3. **Link your account.** Not linked means the agent silently ignores you, with no error.
 4. **Agent names can't be reused.** Names are immutable. To move from Mattermost to Slack I re-ran the template under a new team name.
@@ -170,7 +179,7 @@ Also: Console must stay open and your Mac awake for local agents to answer, and 
 
 - Connect more of a team's rooms: a PM, a designer and an engineer sharing one thread.
 - Let the critic check against real analytics, not just heuristics.
-- Add a fourth agent that turns the chosen variant into a handoff spec.
+- Add an agent that turns the chosen variant into a handoff spec for engineering.
 - Run it in Slack for real workflows with a connected Slack workspace.
 
 Switch made the hard part (rooms, identities, and agents answering in the tools people already use) a configuration problem. That let me spend my time on the design question: how do you keep the human in charge while the agents do the legwork?

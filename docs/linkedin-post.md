@@ -1,21 +1,20 @@
-The PRD is ready. The designs are two weeks away.
+I gave myself a design team that lives in Slack. It has four members, and none of them are human.
 
-Every PM I've worked with knows that gap. As a product designer, I'm usually the reason for it.
+As a product designer, I see the same thing every sprint: the PRD is done, and then it waits. Nobody can compare directions until a designer is free.
 
-So for the Flip the Switch hackathon by WeMakeDevs, I built Switchboard Studio: four AI teammates in a Slack room that turn a brief into real, on-system Figma designs, while the decision stays with a person.
+For the Flip the Switch hackathon by WeMakeDevs, I built Switchboard Studio to close that gap.
 
-Here's how it works:
+You drop a brief in a Slack room, and four AI teammates pick it up:
 
-→ A PM pastes a PRD in Slack. The Brief agent asks the questions that are missing, each with a sensible default.
-→ The Designer builds three different directions in Figma through the Figma MCP, using only our published design system: real components, real variables, no hex codes.
-→ The Critic doesn't just give an opinion, it measures: variable binding, text styles, contrast and touch targets, straight from the file. Then it recommends one.
-→ I pick a direction and ask for a change. The Designer makes a v2 and never overwrites the original.
-→ The Keeper logs every recommendation and choice, so a month from now "why did we go with B?" has an answer.
+1. Brief asks what's missing, and gives a default for every question.
+2. Designer builds three genuinely different directions in Figma, using only our published design system. Real components and real variables, not lookalikes.
+3. Critic scores them with numbers, not vibes: contrast, touch targets, how much is actually on-system. Then it picks a favourite.
+4. Keeper writes down who chose what and why.
 
-It all runs on Switch. The whole team is one template: paste a Figma file key, click once, and the agents and the room exist. No bots to host, no glue code.
+The part I care about most: nothing ships on the AI's say-so. I reply "B, but open the list as a table", and the designer makes a v2 next to the original instead of replacing it.
 
-AI designs. Lint measures. You decide.
+Under the hood it's Switch. One template creates the agents and the room. No servers to babysit, no glue code between the agents. They hand off to each other with plain @mentions, like colleagues.
 
-Demo below. The repo is open source: github.com/romeet9/switchboard-studio
+Watch the 3-minute demo above. The code is open source if you want to run it with your own design system: github.com/romeet9/switchboard-studio
 
-#HowISwitch #FlipTheSwitch #WeMakeDevs #ProductDesign #DesignSystems #Figma #ClaudeCode #AIAgents
+#HowISwitch #FlipTheSwitch #WeMakeDevs #ProductDesign #DesignSystems #Figma #AIAgents #ClaudeCode
