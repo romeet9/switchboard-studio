@@ -16,11 +16,30 @@
 
 <br/>
 
-Drop a product brief in Slack. Three AI teammates turn it into on-system Figma designs, a measured critique, and a decision that stays with you.
+Drop a product brief in Slack. Four AI teammates turn it into on-system Figma designs, a measured critique, and a logged decision that stays with you.
 
-Demo video: https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172
+**AI designs. Lint measures. You decide.**
+
+▶️ **[Watch the demo](https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172)** &nbsp;·&nbsp; 📝 **[Read the build guide on dev.to](https://dev.to/romeet9/i-put-a-design-team-of-four-agents-in-a-slack-room-a-first-timers-guide-to-switch-37nf)**
 
 Entry for the **Flip the Switch** hackathon (WeMakeDevs × DevTools Academy × Switch), Track 01: Best Business Workflow. Built by Romeet Chatterjee, a product designer ([@romeet9](https://github.com/romeet9)).
+
+## 📦 What's in the box
+
+| | |
+|---|---|
+| **4 Claude Code agents** | Brief, Designer, Critic and Keeper, each with its own standing rules, handing off by @mention in one Slack thread |
+| **Real Figma output** | The designer builds 2–3 structurally different variants through the Figma MCP, using only your published library: components, variables, text styles |
+| **A design-system linter** | `studio lint` reads the Figma file and measures variable binding, text styles, library use, WCAG AA contrast and target sizes |
+| **A decision log** | The keeper records every brief, answer, recommendation, choice and `vN` in `decisions.jsonl` and a room document, so `why prd-214` always has an answer |
+| **A tested, dependency-free CLI** | `studio doctor / init / list / lint / export / log` in plain Node: 71 tests across 12 suites, CI on Node 20 and 22 |
+| **One-click setup** | A Switch template creates the agents, the private room, roles (with an exclusive human approver), docs and a kickoff message |
+
+<p align="center">
+  <img src="./docs/screenshots/critic-scorecard.png" width="49%" alt="The critic's measured scorecard in Slack"/>
+  <img src="./docs/screenshots/design-A-state-a.png" width="49%" alt="Variant A built from the Loom design system"/>
+</p>
+<p align="center"><sub>Left: the critic's scorecard, with numbers from <code>studio lint</code>. Right: a variant the designer built in Figma from the published design system.</sub></p>
 
 ## 🔗 Links
 
@@ -28,12 +47,13 @@ Entry for the **Flip the Switch** hackathon (WeMakeDevs × DevTools Academy × S
 - [Switch](https://github.com/sandbox-quantum/switch) (the room and agent platform)
 - [Switch docs](https://docs.switchagents.ai)
 - [Hackathon page](https://www.wemakedevs.org/hackathons/switch)
-- [Blog post](./docs/blog-post.md)
+- [Blog post on dev.to](https://dev.to/romeet9/i-put-a-design-team-of-four-agents-in-a-slack-room-a-first-timers-guide-to-switch-37nf)
 - [Demo script](./docs/demo-script.md)
 
 ## ✨ Features
 
-- **Three agents in one room.** A brief agent, a designer and a critic share one chat thread with you.
+- **Four agents in one room.** A brief agent, a designer, a critic and a keeper share one chat thread with you.
+- **Decisions that are remembered.** The keeper logs every recommendation and choice; `@weft-keeper why <brief>` returns the trail.
 - **Built from your published design system.** Every frame uses components and variables from your Figma library, not one-off styles.
 - **Measured design-system lint.** Variable binding %, text styles, library instances, WCAG contrast and 24 px targets, as numbers rather than opinions.
 - **Clean per-state PNGs in chat.** Reviewers see every state without opening Figma.
@@ -43,7 +63,7 @@ Entry for the **Flip the Switch** hackathon (WeMakeDevs × DevTools Academy × S
 
 ## 🧭 How it works
 
-One Switch room, three Claude Code agents, one human gate. There is no orchestrator code in this repo: @mention hand-offs are the whole coordination layer.
+One Switch room, four Claude Code agents, one human gate. There is no orchestrator code in this repo: @mention hand-offs are the whole coordination layer.
 
 ```mermaid
 sequenceDiagram
@@ -117,7 +137,7 @@ Once it is running:
 | Docker Desktop                         | Switch Console runs its local server in Docker              | `docker info`                          |
 | Switch Console 0.40.x                  | Hosts the agents and the room                               | Open the app, Settings                 |
 | Node 20 or newer                       | Runs the `studio` CLI (no dependencies to install)          | `node -v`                              |
-| Claude Code, signed in                 | The runtime behind all three agents                         | `claude --version`, then `claude`      |
+| Claude Code, signed in                 | The runtime behind all four agents                          | `claude --version`, then `claude`      |
 | Figma MCP connected to Claude Code     | How the designer writes and the critic reads                | `claude mcp list`                      |
 | A published Figma design system        | The library every variant is built from                     | Library file opens, is published       |
 | A Figma account with edit access       | To create the working file the designer builds in           | Can create a design file in the team   |
@@ -393,9 +413,11 @@ The agents' rules are library-agnostic except for the name "Loom". To switch:
 | `src/commands/`                               | `doctor`, `init`, `list`, `lint`, `export`, `log`                          |
 | `src/lib/`                                    | Lint rules, Figma REST client, config, agent linking, table output    |
 | `test/`                                       | `node --test` suites and Figma JSON fixtures                          |
-| `templates/switchboard-studio.template.yaml`  | The Switch template: 3 agents, room, roles, docs, aliases, kickoff    |
+| `templates/switchboard-studio.template.yaml`  | The Switch template: agents, room, roles, docs, aliases, kickoff     |
 | `CLAUDE.md`                                   | Standing Figma rules for the designer's working directory             |
-| `agents/brief/`, `agents/critic/`             | Standing rules for the brief and critic agents                        |
+| `agents/brief/`, `agents/critic/`, `agents/keeper/` | Standing rules for the brief, critic and keeper agents          |
+| `templates/keeper-addon.template.yaml`        | Adds the keeper to an existing room                                   |
+| `docs/screenshots/`                           | Real screenshots from a PRD-214 run                                   |
 | `agents/slack-style.md`                       | How the agents sound and format tables in Slack                       |
 | `design-system/loom-inventory.md`             | Loom pages, components, variant props and variables                   |
 | `briefs/`                                     | `quick-card-brief.md` (smoke test) and `sample-brief.md` (PRD-214)    |
@@ -434,7 +456,7 @@ Run the tests with `npm test`.
 
 - [Switch](https://github.com/sandbox-quantum/switch) by SandboxAQ, for the rooms, templates and agent platform
 - The Figma MCP server, for reading and writing real design files
-- [Claude Code](https://claude.com/claude-code), the runtime behind all three agents
+- [Claude Code](https://claude.com/claude-code), the runtime behind all four agents
 - The Loom Design System, the library every variant is built from
 
 ## 📝 License
