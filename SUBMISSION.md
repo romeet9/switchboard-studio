@@ -7,18 +7,18 @@ Switchboard Studio
 Track 01: Best Business Workflow
 
 **Project description**
-Product brief to design direction is slow, and AI design tools ignore your design system. Switchboard Studio is a team chat room with three Claude Code agents and one human gate. A PM drops a PRD in Slack (or Mattermost). The brief agent asks the missing questions, each with a default. The designer builds three structurally different variants in Figma using only the company's published design system (Loom), and posts each state into chat as an image. The critic measures contrast, target sizes and hand-built parts, scores each variant, and recommends one. The person decides by replying "@designer B + change", and the designer makes a v2 without overwriting anything. It is for PMs and product designers who want a first round of options in minutes that are actually on-system, with the decision staying human.
+Product brief to design direction is slow, and AI design tools ignore your design system. Switchboard Studio is a team chat room with four Claude Code agents and one human gate. A PM drops a PRD in Slack (or Mattermost). The brief agent asks the missing questions, each with a default. The designer builds three structurally different variants in Figma using only the company's published design system (Loom), and posts each state into chat as an image. The critic measures contrast, target sizes and hand-built parts, scores each variant, and recommends one. The person decides by replying "@designer B + change", and the designer makes a v2 without overwriting anything. The keeper logs every recommendation and choice, so "why did we pick B?" always has an answer. It is for PMs and product designers who want a first round of options in minutes that are actually on-system, with the decision staying human.
 
 **GitHub repo URL**
 https://github.com/romeet9/switchboard-studio
 
 **Demo video URL**
-TODO_VIDEO_URL
+https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172
 
 **How did you use Switch in your project?**
-Agent: Claude Code, three instances (brief, designer, critic), with the Figma MCP. Platform: Slack (and the local Mattermost that Switch Console runs) through the template's bridge parameter. Switch is the product. One Switch template creates the whole crew in one click: three agents, a private room, aliases, a kickoff message, and two roles (pm, and an exclusive approver as the human gate). Room documents carry the Figma working-file key and Loom library key, so re-pointing the studio is a doc edit.
+Agent: Claude Code, four instances (brief, designer, critic, keeper), with the Figma MCP. Platform: Slack (and the local Mattermost that Switch Console runs) through the template's bridge parameter. Switch is the product. One Switch template creates the whole crew in one click: four agents, a private room, aliases, a kickoff message, and two roles (pm, and an exclusive approver as the human gate). Room documents carry the Figma working-file key and Loom library key, so re-pointing the studio is a doc edit.
 
-Three agents work in one room and hand off purely by @mention in one thread, with no orchestrator code. They talk in a human-like voice, and put tables (the critic's scorecard, lint results) in code blocks so they read cleanly in Slack. Slack commands drive the workflow: `help`, `status`, `list`, `export` and `lint`, for example `@weft-brief status`, `@weft-critic lint B`, `@weft-designer export B`. The agents run a tested CLI on the host.
+Four agents work in one room and hand off purely by @mention in one thread, with no orchestrator code. They talk in a human-like voice, and put tables (the critic's scorecard, lint results) in code blocks so they read cleanly in Slack. Slack commands drive the workflow: `help`, `status`, `list`, `export` and `lint`, for example `@weft-brief status`, `@weft-critic lint B`, `@weft-designer export B`. The agents run a tested CLI on the host.
 
 The critic's lint is measured, not opinion: unbound fills, strokes, spacing and radius, hand-built parts, contrast below WCAG AA and small click targets. The designer uses Switch's send_attachment to post per-state PNG exports of each variant, so people review in the thread, not in Figma. The human approval gate stays with the person, who steers with an @mention reply ("@weft-designer B + change"); the designer then makes a v2 without overwriting anything. Remove Switch and this is a single-player CLI with no room, no hand-offs, no gate.
 

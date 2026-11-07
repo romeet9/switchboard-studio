@@ -18,13 +18,13 @@
 
 Drop a product brief in Slack. Three AI teammates turn it into on-system Figma designs, a measured critique, and a decision that stays with you.
 
-Demo video: TODO_VIDEO_URL
+Demo video: https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172
 
 Entry for the **Flip the Switch** hackathon (WeMakeDevs × DevTools Academy × Switch), Track 01: Best Business Workflow. Built by Romeet Chatterjee, a product designer ([@romeet9](https://github.com/romeet9)).
 
 ## 🔗 Links
 
-- [Demo video](TODO_VIDEO_URL)
+- [Demo video](https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172)
 - [Switch](https://github.com/sandbox-quantum/switch) (the room and agent platform)
 - [Switch docs](https://docs.switchagents.ai)
 - [Hackathon page](https://www.wemakedevs.org/hackathons/switch)
