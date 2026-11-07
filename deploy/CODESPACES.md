@@ -30,10 +30,19 @@ Free plan: about 60 hours a month on the 2-core machine. The Codespace stops aft
    grep -q 'Include ~/.ssh/codespaces' ~/.ssh/config 2>/dev/null || printf 'Include ~/.ssh/codespaces\n\n%s' "$(cat ~/.ssh/config 2>/dev/null)" > ~/.ssh/config
    ```
 
-4. **Switch Console:** Add a server → Connect to an existing server → `http://localhost:8000`.
-   Then Settings → Remote hosts → Add host → pick the `cs.<name>...` SSH alias, install Node and
-   Claude Code from its rows, and wait for **Ready**. If Claude Code says Not signed in, run the shown
-   login command in the Codespace terminal and press Recheck.
+4. **Enroll the Codespace as a machine.** Open `http://localhost:8000` (Gateway; admin login is
+   `GATEWAY_ADMIN_EMAIL` / `GATEWAY_ADMIN_PASSWORD` in `deploy/switch/.env`), go to Machines → Add machine
+   and copy the one-time code. Switch publishes only dev builds of the controller, so its install script
+   finds nothing; use the copy bundled in Switch Console instead (from your Mac):
+   ```sh
+   S="/Applications/Switch Console.app/Contents/Resources/dist-sidecar"; H=cs.<name>.main
+   ssh $H 'mkdir -p ~/.switch-controller'
+   for f in agent-controller.mjs shared-host.mjs; do ssh $H "cat > ~/.switch-controller/$f" < "$S/$f"; done
+   ssh $H 'node ~/.switch-controller/agent-controller.mjs enroll --server http://localhost:8000 --code <code> --name Codespace'
+   ssh $H 'bash /workspaces/switchboard-studio/deploy/start.sh'
+   ```
+   `deploy/start.sh` starts the controller on every Codespace start from then on.
+   Switch Console (optional): Add a server → Connect to an existing server → `http://localhost:8000`.
 
 5. **Recreate the room on the new server:** connect Slack (Messaging apps → Connect → Slack, same tokens
    as before), import `templates/switchboard-studio.template.yaml` and `templates/keeper-addon.template.yaml`
