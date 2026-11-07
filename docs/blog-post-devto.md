@@ -4,6 +4,8 @@ I'm a product designer. When a PRD lands, what I want is not a pretty mockup. I 
 
 That conversation already happens in team chat. So for the Flip the Switch hackathon I built **Switchboard Studio**: you post a brief in a chat room, and four AI agents (a brief agent, a designer, a critic and a keeper) turn it into Figma variants, a measured critique, a recommendation and a logged decision. You make the decision. This post covers why I built it in chat, what Switch is for a first-timer, how to set it up step by step, and the gotchas that cost me time.
 
+**▶️ [Watch the 3-minute demo](https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172)** · **[Get the code on GitHub](https://github.com/romeet9/switchboard-studio)**
+
 ![Variant A posted in the Slack thread, with a State / What it shows table and one screenshot per state](https://raw.githubusercontent.com/romeet9/switchboard-studio/main/docs/screenshots/variant-a.png)
 
 ## Why design ideation belongs in team chat
@@ -25,7 +27,17 @@ Templates are the reason this is shareable. My entire product is one YAML file.
 
 ## Set it up: step by step
 
-You need Docker Desktop running and Claude Code signed in (run `claude` once in a terminal). I used Switch Console 0.40.1.
+**Before you start**
+
+| You need | Why | Check |
+|---|---|---|
+| Docker Desktop, running | Console runs the Switch server in it | Whale icon in the menu bar |
+| Claude Code, signed in | The runtime behind every agent | `claude --version`, then `claude` once |
+| Switch Console (I used 0.40.1) | Runs the server, agents and rooms | Opens to "Setting up Switch" |
+| A Figma account with your design system published | The designer builds only from it | Library shows under Assets → Libraries |
+| Node 20+ (optional) | For the `studio` CLI and its tests | `node --version` |
+
+Time: about 20 minutes for setup, then a few minutes per brief. Cost: free apart from your Claude plan; nothing runs in the cloud. I built this on macOS. On Windows, use WSL and follow the [Switch docs](https://docs.switchagents.ai/switch-rooms/getting-started).
 
 ### 1. Start a local server
 
@@ -163,6 +175,17 @@ The designer then makes **A v2** next to the original (it never overwrites), pos
 ## The keeper remembers why
 
 Decisions get lost faster than designs. The keeper is the quietest agent in the room: at each milestone (brief set, variants up, recommendation, my choice, each new version) the others ping it, it logs the event and replies "Logged." A month later, `@weft-keeper why prd-214` returns the whole trail: what the critic recommended, what I chose in my own words, and which version came out of it. It also saves that trail as a "Decision log" room document, so it outlives the thread.
+
+## If an agent doesn't answer
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Silence after you @mention an agent | Your chat account isn't linked | Server Home → Messaging apps → Link → This is me |
+| Silence, and the agent shows offline | Console was closed with Cmd+Q, or the Mac slept | Reopen Console and keep the Mac awake |
+| "Nothing happened" on the very first message | The Switch server hadn't started yet | Wait for "Local server is running", then retry |
+| The agent replies but can't reach Figma | The Figma MCP isn't connected for Claude Code | Run `studio doctor`, or `@weft-brief status` in chat |
+| Two agents overwrite each other's files | They share one working directory | Keep the default `{$agents_dir}/{agent}` directory param |
+| A message gets ignored | It didn't @mention anyone | Always mention the agent you're talking to |
 
 ## Gotchas I learned the hard way
 
