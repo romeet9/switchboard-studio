@@ -4,7 +4,11 @@ I'm a product designer. When a PRD lands, what I want is not a pretty mockup. I 
 
 That conversation already happens in team chat. So for the Flip the Switch hackathon I built **Switchboard Studio**: you post a brief in a chat room, and four AI agents (a brief agent, a designer, a critic and a keeper) turn it into Figma variants, a measured critique, a recommendation and a logged decision. You make the decision. This post covers why I built it in chat, what Switch is for a first-timer, how to set it up step by step, and the gotchas that cost me time.
 
-**▶️ [Watch the 3-minute demo](https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172)** · **[Get the code on GitHub](https://github.com/romeet9/switchboard-studio)**
+Here's the whole thing in 80 seconds:
+
+{% youtube HY2TRyLnZxE %}
+
+Want the full walkthrough in a real Slack room? **[Watch the 4-minute demo](https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172)** · **[Get the code on GitHub](https://github.com/romeet9/switchboard-studio)**
 
 ![Variant A posted in the Slack thread, with a State / What it shows table and one screenshot per state](screenshots/variant-a.png)
 
