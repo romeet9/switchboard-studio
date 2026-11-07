@@ -1,0 +1,15 @@
+{
+  "name": "Switchboard Studio",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "hostRequirements": { "cpus": 2, "memory": "8gb" },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": { "version": "22" },
+    "ghcr.io/devcontainers/features/sshd:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "bash deploy/setup.sh",
+  "postStartCommand": "bash deploy/start.sh",
+  "forwardPorts": [8000],
+  "portsAttributes": { "8000": { "label": "Switch server", "onAutoForward": "silent" } }
+}
