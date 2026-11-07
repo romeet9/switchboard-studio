@@ -20,7 +20,7 @@ Drop a product brief in Slack. Four AI teammates turn it into on-system Figma de
 
 **AI designs. Lint measures. You decide.**
 
-▶️ **[Watch the demo](https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172)** &nbsp;·&nbsp; 📝 **[Read the build guide on dev.to](https://dev.to/romeet9/i-put-a-design-team-of-four-agents-in-a-slack-room-a-first-timers-guide-to-switch-37nf)**
+🎬 **[80-second explainer](https://youtu.be/HY2TRyLnZxE)** &nbsp;·&nbsp; ▶️ **[Full demo in Slack](https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172)** &nbsp;·&nbsp; 📝 **[Read the build guide on dev.to](https://dev.to/romeet9/i-put-a-design-team-of-four-agents-in-a-slack-room-a-first-timers-guide-to-switch-37nf)**
 
 Entry for the **Flip the Switch** hackathon (WeMakeDevs × DevTools Academy × Switch), Track 01: Best Business Workflow. Built by Romeet Chatterjee, a product designer ([@romeet9](https://github.com/romeet9)).
 
@@ -43,7 +43,8 @@ Entry for the **Flip the Switch** hackathon (WeMakeDevs × DevTools Academy × S
 
 ## 🔗 Links
 
-- [Demo video](https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172)
+- [80-second explainer (YouTube)](https://youtu.be/HY2TRyLnZxE)
+- [Full demo video (Loom)](https://www.loom.com/share/4af7911170fb4fa693c37cfc68f69172)
 - [Switch](https://github.com/sandbox-quantum/switch) (the room and agent platform)
 - [Switch docs](https://docs.switchagents.ai)
 - [Hackathon page](https://www.wemakedevs.org/hackathons/switch)
