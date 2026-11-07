@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  :root { --lime: #E4FF1A; --ink: #0B0B0B; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--ink); }
+  .slide {
+    position: absolute; inset: 0; box-sizing: border-box;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 0 120px 40px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 500;
+    letter-spacing: -0.075em; white-space: pre;
+    -webkit-font-smoothing: antialiased;
+  }
+  .lime { background: var(--lime); color: var(--ink); }
+  .ink  { background: var(--ink); color: var(--lime); }
+  .lines { font-size: 168px; line-height: 0.86; }
+  .lines.s { font-size: 100px; }
+  .lines.xl { font-size: 220px; }
+  .line { display: block; will-change: transform; }
+  .line.mono { font-family: "SF Mono", Menlo, monospace; letter-spacing: -0.06em; font-weight: 500; }
+  .right .line { text-align: right; padding-right: 0.075em; }
+  .media .lines { width: 840px; }
+  .card {
+    position: absolute; right: 100px; top: 50%;
+    width: 880px; border-radius: 20px; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.35);
+    background: #1a1d21;
+  }
+  .card img { display: block; width: 100%; }
+  .chrome {
+    position: absolute; left: 120px; right: 120px; top: 64px;
+    display: flex; justify-content: space-between;
+    font: 500 30px/1 "Helvetica Neue", Helvetica, sans-serif; letter-spacing: -0.02em;
+    opacity: .9;
+  }
+  .foot {
+    position: absolute; left: 120px; right: 120px; bottom: 60px;
+    display: flex; justify-content: space-between;
+    font: 500 28px/1 "Helvetica Neue", Helvetica, sans-serif; letter-spacing: -0.02em; opacity: .75;
+  }
+  .bar { position: absolute; left: 0; bottom: 0; height: 8px; background: currentColor; }
+  .tag { display: inline-block; padding: 10px 18px; border: 3px solid currentColor; border-radius: 999px; }
+</style></head>
+<body>
+<div id="root"></div>
+<script src="scenes.js"></script>
+<script src="timings.js"></script>
+<script>
+const S = window.SCENES; S.forEach((s, k) => s.dur = window.DURS[k]);
+let acc = 0; S.forEach(s => { s.start = acc; acc += s.dur; });
+window.TOTAL = acc;
+
+const ease = x => 1 - Math.pow(1 - Math.min(Math.max(x, 0), 1), 3);
+const STEP = 0.42, FIRST = 0.15, RISE = 0.22;
+
+window.render = function (t) {
+  const i = Math.max(0, S.findIndex(s => t >= s.start && t < s.start + s.dur));
+  const s = S[i], lt = t - s.start;
+  const root = document.getElementById('root');
+  const lines = s.lines.map((l, k) => {
+    const o = typeof l === 'string' ? { t: l } : l;
+    const p = ease((lt - FIRST - k * STEP) / RISE);
+    const vis = lt >= FIRST + k * STEP;
+    return `<span class="line ${o.mono ? 'mono' : ''}" style="visibility:${vis ? 'visible' : 'hidden'};transform:translateY(${(1 - p) * 40}px)">${o.t.replace(/</g, '&lt;')}</span>`;
+  }).join('');
+  let card = '';
+  if (s.img) {
+    const p = ease((lt - 0.35) / 0.55);
+    card = `<div class="card" style="transform:translateY(calc(-50% + ${(1 - p) * 120}px));opacity:${p}"><img src="../docs/screenshots/${s.img}"></div>`;
+  }
+  const foot = s.foot
+    ? `<div class="foot" style="opacity:${0.8 * ease((lt - 1.4) / 0.4)}"><span>${s.foot[0]}</span><span>${s.foot[1]}</span></div>`
+    : `<div class="foot"><span>built on switch</span><span>flip the switch · wemakedevs</span></div>`;
+  root.innerHTML = `
+    <div class="slide ${s.bg} ${s.align === 'right' ? 'right' : ''} ${s.img ? 'media' : ''}">
+      <div class="chrome"><span>switchboard studio</span>${s.tag ? `<span class="tag">${s.tag}</span>` : '<span></span>'}</div>
+      <div class="lines ${s.cls || ''}">${lines}</div>
+      ${card}
+      ${foot}
+      <div class="bar" style="width:${(t / TOTAL) * 100}%"></div>
+    </div>`;
+};
+render(0);
+</script>
+</body></html>
